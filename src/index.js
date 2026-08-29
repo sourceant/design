@@ -21,6 +21,7 @@ export { default as ListInput } from './components/ListInput.vue'
 export { default as Logo } from './components/Logo.vue'
 export { default as Markdown } from './components/Markdown.vue'
 export { default as Modal } from './components/Modal.vue'
+export { default as Notice } from './components/Notice.vue'
 
 export { useContextKinds } from './composables/useContextKinds'
 export { controlVariants, roomyVariants } from './lib/control'
