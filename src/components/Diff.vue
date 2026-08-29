@@ -13,6 +13,10 @@ interface Note {
   line?: number | null
   severity?: string
   detail: string
+  /** What to put there instead, where whoever said it offered one. */
+  code?: string
+  /** Who said it: a skill's name, or what kind of suggestion it is. */
+  from?: string
 }
 
 interface Props {
@@ -92,14 +96,23 @@ const overall = computed(() => (props.notes ?? []).filter((note) => !note.line))
 <template>
   <div :class="cn('overflow-hidden rounded-md border', props.class)">
     <div v-if="overall.length" class="space-y-2 border-b bg-muted/30 p-3">
-      <p
+      <div
         v-for="(note, index) in overall"
         :key="index"
-        class="rounded border px-3 py-2 text-sm"
+        class="rounded border text-sm"
         :class="note.severity === 'blocking' ? 'border-destructive/40 bg-destructive/5' : 'bg-card'"
       >
-        {{ note.detail }}
-      </p>
+        <div class="px-3 py-2">
+          <span v-if="note.from" class="mr-2 text-xs uppercase tracking-wide text-muted-foreground">
+            {{ note.from }}
+          </span>
+          {{ note.detail }}
+        </div>
+        <pre
+          v-if="note.code"
+          class="overflow-x-auto border-t bg-success/10 px-3 py-2 font-mono text-xs"
+        >{{ note.code }}</pre>
+      </div>
     </div>
 
     <div v-if="!rows.length" class="p-4 text-sm text-muted-foreground">
@@ -124,10 +137,19 @@ const overall = computed(() => (props.notes ?? []).filter((note) => !note.line))
             <tr v-for="(note, at) in said.get(row.after ?? -1) ?? []" :key="`${index}-${at}`">
               <td colspan="4" class="px-3 py-2">
                 <div
-                  class="rounded border px-3 py-2 font-sans text-sm"
+                  class="rounded border font-sans text-sm"
                   :class="note.severity === 'blocking' ? 'border-destructive/40 bg-destructive/5' : 'bg-muted/40'"
                 >
-                  {{ note.detail }}
+                  <div class="px-3 py-2">
+                    <span v-if="note.from" class="mr-2 text-xs uppercase tracking-wide text-muted-foreground">
+                      {{ note.from }}
+                    </span>
+                    {{ note.detail }}
+                  </div>
+                  <pre
+                    v-if="note.code"
+                    class="overflow-x-auto border-t bg-success/10 px-3 py-2 font-mono text-xs"
+                  >{{ note.code }}</pre>
                 </div>
               </td>
             </tr>
