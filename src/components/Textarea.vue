@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { roomyVariants, type ControlSize } from '../lib/control'
 import { cn } from '../lib/utils'
 
 /** More than one line of text, and it grows downwards only. */
@@ -6,11 +7,17 @@ import { cn } from '../lib/utils'
 interface Props {
   modelValue?: string
   rows?: number
+  /** The same scale as the other controls, minus the height its rows decide. */
+  size?: ControlSize
   class?: string
   invalid?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), { rows: 3 })
+const props = withDefaults(defineProps<Props>(), {
+  rows: 3,
+  size: 'default',
+  invalid: false,
+})
 defineEmits<{ 'update:modelValue': [string] }>()
 </script>
 
@@ -18,13 +25,7 @@ defineEmits<{ 'update:modelValue': [string] }>()
   <textarea
     :value="modelValue"
     :rows="rows"
-    :class="cn(
-      'w-full resize-y rounded-md border bg-muted/50 px-3 py-2 text-sm text-foreground outline-none transition-colors',
-      'placeholder:text-muted-foreground focus:border-primary/50',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      invalid && 'border-destructive/60 focus:border-destructive',
-      props.class,
-    )"
+    :class="cn(roomyVariants({ size, invalid }), props.class)"
     @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
   />
 </template>

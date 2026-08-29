@@ -21,4 +21,5 @@ export { default as Logo } from './components/Logo.vue'
 export { default as Modal } from './components/Modal.vue'
 
 export { useContextKinds } from './composables/useContextKinds'
+export { controlVariants, roomyVariants } from './lib/control'
 export { cn } from './lib/utils'
