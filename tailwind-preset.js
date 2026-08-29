@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography'
+
 /* The design, as a Tailwind preset.
  *
  * Content globs are deliberately absent: which files to scan is the consuming
@@ -119,5 +121,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  // A design system that ships a component for prose has to ship the plugin
+  // that makes prose look like anything.
+  plugins: [typography],
 }

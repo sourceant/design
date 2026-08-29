@@ -18,6 +18,7 @@ export { default as Select } from './components/Select.vue'
 export { default as Tabs } from './components/Tabs.vue'
 export { default as Textarea } from './components/Textarea.vue'
 export { default as Logo } from './components/Logo.vue'
+export { default as Markdown } from './components/Markdown.vue'
 export { default as Modal } from './components/Modal.vue'
 
 export { useContextKinds } from './composables/useContextKinds'
