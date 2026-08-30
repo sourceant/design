@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { cn } from '../lib/utils'
+import DotIndicator from './DotIndicator.vue'
+import Markdown from './Markdown.vue'
 
 /** What changed in one file, with room for things said about a line.
  *
@@ -9,14 +11,23 @@ import { cn } from '../lib/utils'
  * every line after it moves one side, the other, or both.
  */
 
+type Tone = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+
 interface Note {
   line?: number | null
   severity?: string
+  /** Markdown, because a model writes backticks and lists whether or not
+   * anybody asked it to. Rendered as text it shows the punctuation. */
   detail: string
   /** What to put there instead, where whoever said it offered one. */
   code?: string
+  /** What it replaces. Without it a suggestion is an addition out of nowhere,
+   * and the reader has to find what is going away themselves. */
+  replacing?: string
   /** Who said it: a skill's name, or what kind of suggestion it is. */
   from?: string
+  /** What kind of thing it is, in colour. */
+  tone?: Tone
 }
 
 interface Props {
@@ -27,6 +38,32 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), { patch: '', notes: () => [] })
+
+const EDGE: Record<string, string> = {
+  neutral: 'bg-card',
+  info: 'border-primary/30 bg-primary/5',
+  success: 'border-success/40 bg-success/5',
+  warning: 'border-warning/40 bg-warning/5',
+  danger: 'border-destructive/40 bg-destructive/5',
+}
+
+const LABEL: Record<string, string> = {
+  neutral: 'text-muted-foreground',
+  info: 'text-primary',
+  success: 'text-success',
+  warning: 'text-warning',
+  danger: 'text-destructive',
+}
+
+function edge(note: Note): string {
+  if (note.severity === 'blocking') return EDGE.danger
+  return EDGE[note.tone ?? 'neutral'] ?? EDGE.neutral
+}
+
+function label(note: Note): string {
+  if (note.severity === 'blocking') return LABEL.danger
+  return LABEL[note.tone ?? 'neutral'] ?? LABEL.neutral
+}
 
 const HUNK = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/
 
@@ -100,14 +137,22 @@ const overall = computed(() => (props.notes ?? []).filter((note) => !note.line))
         v-for="(note, index) in overall"
         :key="index"
         class="rounded border text-sm"
-        :class="note.severity === 'blocking' ? 'border-destructive/40 bg-destructive/5' : 'bg-card'"
+        :class="edge(note)"
       >
         <div class="px-3 py-2">
-          <span v-if="note.from" class="mr-2 text-xs uppercase tracking-wide text-muted-foreground">
-            {{ note.from }}
-          </span>
-          {{ note.detail }}
+          <DotIndicator
+            v-if="note.from"
+            :tone="note.severity === 'blocking' ? 'danger' : (note.tone ?? 'neutral')"
+            :title="String(note.from)"
+            :label="String(note.from).toLowerCase()"
+            class="mr-2"
+          />
+          <Markdown :source="note.detail" class="inline [&>p]:inline" />
         </div>
+        <pre
+          v-if="note.replacing"
+          class="overflow-x-auto border-t bg-destructive/10 px-3 py-2 font-mono text-xs"
+        >{{ note.replacing }}</pre>
         <pre
           v-if="note.code"
           class="overflow-x-auto border-t bg-success/10 px-3 py-2 font-mono text-xs"
@@ -136,16 +181,21 @@ const overall = computed(() => (props.notes ?? []).filter((note) => !note.line))
 
             <tr v-for="(note, at) in said.get(row.after ?? -1) ?? []" :key="`${index}-${at}`">
               <td colspan="4" class="px-3 py-2">
-                <div
-                  class="rounded border font-sans text-sm"
-                  :class="note.severity === 'blocking' ? 'border-destructive/40 bg-destructive/5' : 'bg-muted/40'"
-                >
+                <div class="rounded border font-sans text-sm" :class="edge(note)">
                   <div class="px-3 py-2">
-                    <span v-if="note.from" class="mr-2 text-xs uppercase tracking-wide text-muted-foreground">
-                      {{ note.from }}
-                    </span>
-                    {{ note.detail }}
+                    <DotIndicator
+                      v-if="note.from"
+                      :tone="note.severity === 'blocking' ? 'danger' : (note.tone ?? 'neutral')"
+                      :title="String(note.from)"
+                      :label="String(note.from).toLowerCase()"
+                      class="mr-2"
+                    />
+                    <Markdown :source="note.detail" class="inline [&>p]:inline" />
                   </div>
+                  <pre
+                    v-if="note.replacing"
+                    class="overflow-x-auto border-t bg-destructive/10 px-3 py-2 font-mono text-xs"
+                  >{{ note.replacing }}</pre>
                   <pre
                     v-if="note.code"
                     class="overflow-x-auto border-t bg-success/10 px-3 py-2 font-mono text-xs"

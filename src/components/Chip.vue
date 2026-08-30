@@ -10,7 +10,7 @@ import { cn } from '../lib/utils'
  * anybody.
  */
 
-type Tone = 'default' | 'success' | 'danger' | 'muted'
+type Tone = 'default' | 'success' | 'warning' | 'danger' | 'muted'
 
 interface Props {
   tone?: Tone
@@ -27,6 +27,7 @@ defineEmits<{ remove: [] }>()
 const TONES: Record<Tone, string> = {
   default: 'border-primary/30 bg-primary/10 text-foreground',
   success: 'border-success/40 bg-success/10 text-foreground',
+  warning: 'border-warning/40 bg-warning/10 text-foreground',
   danger: 'border-destructive/40 bg-destructive/10 text-foreground',
   muted: 'border-border bg-muted/60 text-muted-foreground',
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { cn } from '../lib/utils'
 
 /** What a page is, and what can be done to all of it.
@@ -12,6 +13,10 @@ interface Props {
   title: string
   sub?: string
   pillar?: 'memory' | 'graph' | 'review' | 'tokens' | 'brand'
+  /** Overrides the pillar tint where the page is about a state rather than an
+   * area. A review's icon has to agree with its verdict: the review pillar is
+   * a green, so a page of requested changes was showing a green tick. */
+  tone?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
   /** A path, an id, anything that reads better in the typeface for one. */
   mono?: boolean
   class?: string
@@ -26,6 +31,16 @@ const tints: Record<string, string> = {
   tokens: 'bg-pillar-tokens/15 text-pillar-tokens',
   brand: 'bg-primary/15 text-primary',
 }
+
+const tones: Record<string, string> = {
+  neutral: 'bg-muted text-muted-foreground',
+  info: 'bg-primary/15 text-primary',
+  success: 'bg-success/15 text-success',
+  warning: 'bg-warning/15 text-warning',
+  danger: 'bg-destructive/15 text-destructive',
+}
+
+const tint = computed(() => (props.tone ? tones[props.tone] : tints[props.pillar]))
 </script>
 
 <template>
@@ -34,7 +49,7 @@ const tints: Record<string, string> = {
       <slot name="back" />
       <div
         v-if="$slots.icon"
-        :class="cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-lg', tints[pillar])"
+        :class="cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-lg', tint)"
       >
         <slot name="icon" />
       </div>
@@ -49,6 +64,12 @@ const tints: Record<string, string> = {
         >
           {{ sub }}
         </p>
+        <div
+          v-if="$slots.meta"
+          class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted-foreground"
+        >
+          <slot name="meta" />
+        </div>
       </div>
     </div>
     <div v-if="$slots.actions" class="flex flex-wrap items-center gap-2">
