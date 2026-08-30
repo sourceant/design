@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish
+        uses: whilesmart/workflows/js/publish@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          scope: '@sourceant'
+          verify_command: node scripts/check-exports.mjs

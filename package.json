@@ -4,6 +4,13 @@
   "description": "SourceAnt design system: tokens, primitives, and the graph renderer",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sourceant/design.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "sideEffects": [
     "*.css"
   ],
