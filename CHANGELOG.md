@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-01
+
+The components the dashboard kept for itself, so both surfaces can share one
+set. Everything from 0.1.0 keeps working unchanged.
+
+### Added
+
+- A failed read with the reason and a retry, a list placeholder that holds the
+  shape of what is coming, a dismissible action error, page navigation with the
+  helpers that decide which numbers to offer, themed line art, and a theme
+  switch
+- `useTheme`, which reads the theme off the root element so a toggle renders the
+  right icon on first paint
+
+### Changed
+
+- `Loading` takes the richer spinner and can name where the work is going, which
+  makes the second loading treatment unnecessary
+
 ## [0.1.0] - 2026-08-30
 
 First release. Versioned on its own, because nothing about the components is
