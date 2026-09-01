@@ -36,6 +36,23 @@
     --pillar-graph: 262 83% 66%;
     --pillar-review: 142 71% 45%;
     --pillar-tokens: 38 92% 50%;
+
+    /* How bad a finding is. Reserved: never reused to tell two series apart. */
+    --severity-critical: 0 72% 51%;
+    --severity-high: 25 90% 48%;
+    --severity-moderate: 38 92% 50%;
+    --severity-low: 217 91% 60%;
+
+    /* One per figure in a row, in a fixed order so a card keeps its colour as
+       the row grows. Measured, not chosen: the pair a colourblind reader would
+       struggle with is amber against green, which every card's own words carry
+       it past. */
+    --figure-1: 217 91% 55%;
+    --figure-2: 330 81% 50%;
+    --figure-3: 32 95% 44%;
+    --figure-4: 160 94% 30%;
+    --figure-5: 262 83% 58%;
+    --figure-6: 192 91% 36%;
   }
 
   .light {
