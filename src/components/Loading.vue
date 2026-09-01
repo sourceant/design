@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Loader2 } from 'lucide-vue-next'
 import { cn } from '../lib/utils'
 
 /** Not here yet, as Empty is nothing here.
@@ -12,6 +11,8 @@ import { cn } from '../lib/utils'
 
 interface Props {
   label?: string
+  /** Where it comes from, e.g. "GitHub". Rendered as "<label> from <source>". */
+  source?: string
   /** A second line, for work that keeps going whether or not anyone watches. */
   note?: string
   size?: 'sm' | 'md' | 'lg'
@@ -26,40 +27,77 @@ const props = withDefaults(defineProps<Props>(), {
   fill: true,
 })
 
-const SPINNER: Record<string, string> = {
-  sm: 'h-5 w-5',
-  md: 'h-8 w-8',
-  lg: 'h-10 w-10',
+const RING: Record<string, string> = {
+  sm: 'h-10 w-10',
+  md: 'h-14 w-14',
+  lg: 'h-16 w-16',
+}
+
+const GLOW: Record<string, string> = {
+  sm: 'h-14 w-14',
+  md: 'h-20 w-20',
+  lg: 'h-24 w-24',
+}
+
+const DOT: Record<string, string> = {
+  sm: 'h-1.5 w-1.5',
+  md: 'h-2 w-2',
+  lg: 'h-2.5 w-2.5',
 }
 
 const TEXT: Record<string, string> = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg',
+  sm: 'text-xs',
+  md: 'text-sm',
+  lg: 'text-base',
+}
+
+const NOTE: Record<string, string> = {
+  sm: 'text-[11px]',
+  md: 'text-xs',
+  lg: 'text-sm',
 }
 
 const pad = computed(() => (props.size === 'sm' ? 'py-8' : 'py-16'))
+const message = computed(() => (props.source ? `${props.label} from ${props.source}` : props.label))
 </script>
 
 <template>
   <div
     :class="cn(
-      'flex flex-col items-center justify-center gap-3 text-center',
+      'flex flex-col items-center justify-center gap-5 px-6 text-center',
       fill ? 'min-h-0 flex-1' : pad,
       props.class,
     )"
     role="status"
     aria-live="polite"
   >
-    <span class="relative flex items-center justify-center">
+    <div class="relative flex items-center justify-center">
       <span
-        :class="cn('absolute inline-flex animate-ping rounded-full bg-primary/20', SPINNER[size])"
+        :class="cn('absolute animate-pulse rounded-full bg-primary/25 blur-2xl', GLOW[size])"
+        aria-hidden="true"
       />
-      <Loader2 :class="cn('relative animate-spin text-muted-foreground', SPINNER[size])" />
-    </span>
-    <p :class="cn('font-medium', TEXT[size])">{{ label }}</p>
-    <p v-if="note || $slots.default" class="max-w-md text-sm text-muted-foreground">
-      <slot>{{ note }}</slot>
-    </p>
+      <span :class="cn('rounded-full border-2 border-border/70', RING[size])" aria-hidden="true" />
+      <span
+        :class="cn(
+          'absolute animate-spin rounded-full border-2 border-transparent border-t-primary border-r-primary/50',
+          RING[size],
+        )"
+        aria-hidden="true"
+      />
+      <span
+        :class="cn('absolute animate-pulse rounded-full bg-primary', DOT[size])"
+        aria-hidden="true"
+      />
+    </div>
+
+    <div class="animate-fade-in space-y-1.5">
+      <p :class="cn('font-medium text-foreground', TEXT[size])">{{ message }}</p>
+      <p
+        v-if="note || $slots.default"
+        :class="cn('mx-auto max-w-md text-muted-foreground', NOTE[size])"
+      >
+        <slot>{{ note }}</slot>
+      </p>
+    </div>
   </div>
 </template>

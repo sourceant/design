@@ -28,9 +28,24 @@ export { default as Status } from './components/Status.vue'
 export { default as Empty } from './components/Empty.vue'
 export { default as DotIndicator } from './components/DotIndicator.vue'
 export { default as Loading } from './components/Loading.vue'
+export { default as LoadFailure } from './components/LoadFailure.vue'
+export { default as SkeletonList } from './components/SkeletonList.vue'
+export { default as ActionError } from './components/ActionError.vue'
+export { default as Pagination } from './components/Pagination.vue'
+export { default as Illustration } from './components/Illustration.vue'
+export { default as ThemeToggle } from './components/ThemeToggle.vue'
 export { default as Origin } from './components/Origin.vue'
 export { default as Section } from './components/Section.vue'
 
 export { useContextKinds } from './composables/useContextKinds'
+export { useTheme } from './composables/useTheme'
 export { controlVariants, roomyVariants } from './lib/control'
 export { cn } from './lib/utils'
+export {
+  DEFAULT_PAGE_SIZE,
+  MAX_PAGE_SIZE,
+  emptyPage,
+  pageKey,
+  pageSummary,
+  pageWindow,
+} from './lib/pagination'
