@@ -20,6 +20,8 @@ set. Everything from 0.1.0 keeps working unchanged.
   switch
 - `useTheme`, which reads the theme off the root element so a toggle renders the
   right icon on first paint
+- The severity scale and the ordered figure palette, so a severity means the
+  same colour wherever it is shown
 
 ### Changed
 
