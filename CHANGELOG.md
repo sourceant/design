@@ -25,6 +25,9 @@ set. Everything from 0.1.0 keeps working unchanged.
 
 ### Changed
 
+- `Tabs` carries an icon and can turn an option off, which is what kept
+  applications spelling the strip out by hand: a switcher whose options are not
+  all available has to say so on the option itself
 - `Loading` takes the richer spinner and can name where the work is going, which
   makes the second loading treatment unnecessary
 
