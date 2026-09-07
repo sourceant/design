@@ -29,8 +29,11 @@ interface Props {
   tabs: Tab[]
   /** A name for whoever is not looking at it. */
   label?: string
-  /** Tighter, for a strip inside a panel header rather than beside a page title. */
-  size?: 'sm' | 'default'
+  /**
+   * How much room the strip is given. `lg` stands beside a page title, `default`
+   * sits in a panel header, `sm` is small enough to live inside a caption.
+   */
+  size?: 'sm' | 'default' | 'lg'
   class?: string
 }
 
@@ -39,7 +42,8 @@ defineEmits<{ 'update:modelValue': [string] }>()
 
 const sizes = {
   sm: 'gap-1 px-1.5 py-0.5 text-[10px]',
-  default: 'gap-1.5 px-3 py-1 text-xs',
+  default: 'gap-1.5 px-2.5 py-1 text-xs',
+  lg: 'gap-2 px-3 py-1 text-sm',
 }
 </script>
 
