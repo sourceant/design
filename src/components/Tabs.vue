@@ -20,6 +20,8 @@ interface Tab {
   icon?: Component
   /** What it does, or why it cannot be picked. */
   title?: string
+  /** How many are behind it. Shown quieter than the label, as Section does. */
+  count?: number
   /** Present but not available, rather than absent. */
   disabled?: boolean
 }
@@ -71,6 +73,7 @@ const sizes = {
     >
       <component :is="tab.icon" v-if="tab.icon" :class="size === 'sm' ? 'h-3 w-3' : 'h-3.5 w-3.5'" />
       {{ tab.label }}
+      <span v-if="tab.count" class="opacity-60">{{ tab.count }}</span>
     </button>
   </div>
 </template>
