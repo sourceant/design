@@ -14,6 +14,10 @@ set. Everything from 0.1.0 keeps working unchanged.
 
 ### Added
 
+- `Drawer`, a panel that comes in from either side at the full height of the
+  window. A modal is right for a question with an answer and wrong for work: it
+  floats in the middle, it is as tall as its contents, and it covers the thing
+  being worked on
 - A failed read with the reason and a retry, a list placeholder that holds the
   shape of what is coming, a dismissible action error, page navigation with the
   helpers that decide which numbers to offer, themed line art, and a theme
