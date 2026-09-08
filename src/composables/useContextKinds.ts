@@ -53,6 +53,23 @@ const INK: Record<string, string> = {
   review: '#db2777', plan: '#65a30d',
 }
 
+const OPTIONS = [
+  'Decision', 'Constraint', 'Workaround', 'Convention',
+  'Pattern', 'Discussion', 'Review', 'Plan',
+] as const
+
+/** What each kind is for, in the words a person picking one needs. */
+const DESCRIBED: Record<string, string> = {
+  Decision: 'A deliberate choice made about architecture, tooling, or approach',
+  Constraint: 'A hard limitation imposed by external factors or requirements',
+  Workaround: 'A temporary fix for a known issue or limitation',
+  Convention: 'An established principle or standard the team follows',
+  Pattern: 'An observed model, recurring choice, or emergent practice',
+  Discussion: 'Key points from a team discussion or debate',
+  Review: 'Insights surfaced during code review',
+  Plan: 'A future intention or roadmap item',
+}
+
 export function useContextKinds() {
   const NEUTRAL = 'bg-muted text-muted-foreground border-border'
 
@@ -74,5 +91,5 @@ export function useContextKinds() {
     color: INK[kind]!,
   }))
 
-  return { tone, fill, ink, legend, kinds: Object.keys(TONE) }
+  return { tone, fill, ink, legend, kinds: Object.keys(TONE), kindOptions: OPTIONS, kindDescriptions: DESCRIBED }
 }
