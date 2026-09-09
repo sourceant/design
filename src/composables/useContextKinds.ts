@@ -10,6 +10,7 @@
  * rather than assembled.
  */
 const TONE: Record<string, string> = {
+  intent: 'bg-fuchsia-600/10 text-fuchsia-600 border-fuchsia-600/20',
   decision: 'bg-blue-600/10 text-blue-600 border-blue-600/20',
   constraint: 'bg-amber-600/10 text-amber-600 border-amber-600/20',
   workaround: 'bg-red-600/10 text-red-600 border-red-600/20',
@@ -21,6 +22,7 @@ const TONE: Record<string, string> = {
 }
 
 const FILL: Record<string, string> = {
+  intent: 'bg-fuchsia-600',
   decision: 'bg-blue-600',
   constraint: 'bg-amber-600',
   workaround: 'bg-red-600',
@@ -40,17 +42,39 @@ const FILL: Record<string, string> = {
  * colourblind reader, and review against discussion was hard to tell apart with
  * full colour vision.
  *
- * Eight hues cannot all be separated from one another, which is a fact about
- * eight rather than about these eight: red-green colourblindness collapses pink
- * onto green whatever shades are picked. These pass every check except one pair
- * of neighbours, and a drawing that needs more than colour to be read needs a
- * second channel rather than better colours.
+ * Nine hues cannot all be separated from one another, which is a fact about
+ * nine rather than about these nine: red-green colourblindness collapses pink
+ * onto green whatever shades are picked. A drawing that needs more than colour
+ * to be read needs a second channel rather than better colours.
+ *
+ * They are spaced by hue rather than picked by eye. The two widest gaps left
+ * were near 123 and 298 degrees; intent took 298 because the other falls in the
+ * green that collapses onto pink.
  */
 const INK: Record<string, string> = {
   system: '#7c3aed', part: '#d97706', contract: '#0891b2',
+  intent: '#c026d3',
   decision: '#2563eb', constraint: '#d97706', workaround: '#dc2626',
   convention: '#7c3aed', pattern: '#059669', discussion: '#0891b2',
   review: '#db2777', plan: '#65a30d',
+}
+
+const OPTIONS = [
+  'Intent', 'Decision', 'Constraint', 'Workaround', 'Convention',
+  'Pattern', 'Discussion', 'Review', 'Plan',
+] as const
+
+/** What each kind is for, in the words a person picking one needs. */
+const DESCRIBED: Record<string, string> = {
+  Intent: 'What this exists to do, who for, and what it deliberately is not',
+  Decision: 'A deliberate choice made about architecture, tooling, or approach',
+  Constraint: 'A hard limitation imposed by external factors or requirements',
+  Workaround: 'A temporary fix for a known issue or limitation',
+  Convention: 'An established principle or standard the team follows',
+  Pattern: 'An observed model, recurring choice, or emergent practice',
+  Discussion: 'Key points from a team discussion or debate',
+  Review: 'Insights surfaced during code review',
+  Plan: 'A future intention or roadmap item',
 }
 
 export function useContextKinds() {
@@ -74,5 +98,5 @@ export function useContextKinds() {
     color: INK[kind]!,
   }))
 
-  return { tone, fill, ink, legend, kinds: Object.keys(TONE) }
+  return { tone, fill, ink, legend, kinds: Object.keys(TONE), kindOptions: OPTIONS, kindDescriptions: DESCRIBED }
 }

@@ -73,6 +73,20 @@ export default {
           review: 'hsl(var(--pillar-review) / <alpha-value>)',
           tokens: 'hsl(var(--pillar-tokens) / <alpha-value>)',
         },
+        severity: {
+          critical: 'hsl(var(--severity-critical) / <alpha-value>)',
+          high: 'hsl(var(--severity-high) / <alpha-value>)',
+          moderate: 'hsl(var(--severity-moderate) / <alpha-value>)',
+          low: 'hsl(var(--severity-low) / <alpha-value>)',
+        },
+        figure: {
+          1: 'hsl(var(--figure-1) / <alpha-value>)',
+          2: 'hsl(var(--figure-2) / <alpha-value>)',
+          3: 'hsl(var(--figure-3) / <alpha-value>)',
+          4: 'hsl(var(--figure-4) / <alpha-value>)',
+          5: 'hsl(var(--figure-5) / <alpha-value>)',
+          6: 'hsl(var(--figure-6) / <alpha-value>)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
