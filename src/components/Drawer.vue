@@ -5,13 +5,8 @@ import { cn } from '../lib/utils'
 
 /** A panel that comes in from the side, over what you were looking at.
  *
- * A modal is right for a question with an answer. It is wrong for work: it
- * floats in the middle, it is as tall as its contents, and it covers the thing
- * being worked on. Writing something long against a list you are still reading
- * wants the full height of the window and a side of it, not the centre.
- *
- * Five panels in the applications were each drawing their own version of this,
- * which is why they open from different sides at different widths.
+ * Takes the full height of the window, so a long piece of work stays readable
+ * against a list that is still on screen behind it.
  */
 
 interface Props {
