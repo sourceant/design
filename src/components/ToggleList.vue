@@ -26,6 +26,9 @@ const props = withDefaults(defineProps<{
   /** Longest a name may be, matching what the store will take. */
   maxLength?: number
   disabled?: boolean
+  /** Off where there is no room to type, such as inside a table cell. The
+   * offered names still stand, so a name can be said with one click. */
+  addable?: boolean
   /** Said where nothing may be added, such as a file somebody else owns. */
   refusal?: string
   class?: string
@@ -35,6 +38,7 @@ const props = withDefaults(defineProps<{
   max: 50,
   maxLength: 64,
   disabled: false,
+  addable: true,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [Record<string, boolean>] }>()
@@ -97,7 +101,7 @@ function add(name: string) {
         </button>
       </span>
     </div>
-    <p v-else class="text-xs text-muted-foreground">Nothing said yet.</p>
+    <p v-else-if="addable" class="text-xs text-muted-foreground">Nothing said yet.</p>
 
     <div v-if="!disabled" class="flex flex-wrap items-center gap-1.5">
       <button
@@ -111,6 +115,7 @@ function add(name: string) {
         {{ one }}
       </button>
       <input
+        v-if="addable"
         v-model="adding"
         :disabled="full"
         :maxlength="maxLength"
