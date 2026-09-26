@@ -10,8 +10,8 @@ notices the two products no longer look like one.
 ## What is in it, and what is not
 
 Tokens, and the pieces a screen is assembled from: `Avatar`, `Badge`, `Button`,
-`Card`, `Field`, `Input`, `ItemCard`, `Logo`, `Modal`, `PageHead`, `Select`,
-`Tabs`, `Textarea`, and `CodeGraph`.
+`Card`, `CommandSearch`, `Field`, `Input`, `ItemCard`, `Logo`, `Modal`,
+`PageHead`, `Select`, `Table`, `Tabs`, `Textarea`, and `CodeGraph`. `src/index.js` is the list that is actually true.
 
 Nothing that knows what a workspace, a review or a proposal is. Those belong to
 whichever application has them, and a package that grew to hold them would be
