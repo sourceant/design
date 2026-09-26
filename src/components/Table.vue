@@ -52,7 +52,7 @@ const keyOf = (row: Record<string, unknown>, index: number) =>
             scope="col"
             :style="column.width ? { width: column.width } : undefined"
             :class="cn(
-              'px-3 py-2 text-[11px] font-medium uppercase tracking-wide text-muted-foreground',
+              'px-2.5 py-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground',
               column.align === 'right' ? 'text-right' : 'text-left',
               column.narrow && 'hidden sm:table-cell',
             )"
@@ -71,8 +71,8 @@ const keyOf = (row: Record<string, unknown>, index: number) =>
             v-for="column in columns"
             :key="column.id"
             :class="cn(
-              'px-3 align-middle',
-              dense ? 'py-1.5' : 'py-2.5',
+              'px-2.5 align-middle',
+              dense ? 'py-1' : 'py-1.5',
               column.align === 'right' ? 'text-right' : 'text-left',
               column.narrow && 'hidden sm:table-cell',
             )"
