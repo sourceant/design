@@ -3,36 +3,29 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ArrowUpRight, Loader2, Search, X } from 'lucide-vue-next'
 import { cn } from '../lib/utils'
 
-/**
- * One field that finds anything, opened from the keyboard.
+/** One field that finds anything, opened with Ctrl or Cmd K.
  *
- * Navigation answers "where is that screen". This answers "where is that
- * thing", which is the question somebody actually has, and the answer is
- * usually not on the screen they are looking at.
- *
- * What the results are is the application's business: it is handed groups of
- * them, already narrowed, so it can ask a server or filter what it holds. This
- * owns the field, the keys and the list, because those were written out by hand
- * in every product that had a search.
+ * Results are handed in, already narrowed, so the application decides what is
+ * searchable. This owns the field, the keys and the list.
  */
 
-export interface CommandSearchItem {
+export interface GlobalSearchItem {
   id: string
   label: string
   /** A second line, for what the label alone leaves ambiguous. */
   detail?: string
 }
 
-export interface CommandSearchGroup {
+export interface GlobalSearchGroup {
   id: string
   label: string
-  items: CommandSearchItem[]
+  items: GlobalSearchItem[]
 }
 
 const props = withDefaults(defineProps<{
   /** The query, so the application can narrow or ask for results itself. */
   modelValue?: string
-  groups?: CommandSearchGroup[]
+  groups?: GlobalSearchGroup[]
   open?: boolean
   /** Said above the results, for where the search is looking. */
   context?: string
@@ -55,7 +48,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'update:modelValue': [string]
   'update:open': [boolean]
-  select: [CommandSearchItem, string]
+  select: [GlobalSearchItem, string]
 }>()
 
 const active = ref(0)
@@ -92,7 +85,7 @@ function choose(index = active.value) {
   emit('update:open', false)
 }
 
-function indexOf(group: CommandSearchGroup, item: CommandSearchItem) {
+function indexOf(group: GlobalSearchGroup, item: GlobalSearchItem) {
   return flat.value.findIndex(one => one.group === group.id && one.item.id === item.id)
 }
 
@@ -154,9 +147,9 @@ onUnmounted(() => {
           :value="modelValue"
           role="combobox"
           aria-autocomplete="list"
-          aria-controls="command-search-results"
+          aria-controls="global-search-results"
           :aria-expanded="open"
-          :aria-activedescendant="flat.length ? `command-search-${active}` : undefined"
+          :aria-activedescendant="flat.length ? `global-search-${active}` : undefined"
           :aria-label="label"
           :placeholder="placeholder"
           class="h-10 min-w-0 flex-1 bg-transparent text-sm outline-none"
@@ -179,7 +172,7 @@ onUnmounted(() => {
       <div class="absolute left-0 right-0 top-full mt-1 overflow-hidden rounded-lg border bg-card shadow-lg">
         <p v-if="context" class="border-b px-3 py-2 text-xs text-muted-foreground">{{ context }}</p>
         <ul
-          id="command-search-results"
+          id="global-search-results"
           role="listbox"
           :aria-label="label"
           class="max-h-[60vh] overflow-y-auto py-1"
@@ -194,7 +187,7 @@ onUnmounted(() => {
             </li>
             <li
               v-for="item in group.items"
-              :id="`command-search-${indexOf(group, item)}`"
+              :id="`global-search-${indexOf(group, item)}`"
               :key="`${group.id}:${item.id}`"
               role="option"
               :aria-selected="indexOf(group, item) === active"

@@ -9,17 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2026-09-27
 
-Two pieces both products were about to write twice. Everything from 0.2.0 keeps
-working unchanged.
+Everything from 0.2.0 keeps working unchanged.
 
 ### Added
 
-- `Table`, because a question asked of sixty rows is a column rather than sixty
-  cards. Cells are slots named after their column, so what a value looks like
-  stays with the application that knows what it means
-- `CommandSearch`, the field that finds anything, opened from the keyboard. It
-  owns the field, the keys and the list; the application hands it groups of
-  results it has already narrowed
+- `Table`, with cells as slots named after their column
+- `GlobalSearch`, a search field opened with Ctrl or Cmd K, handed groups of
+  results the application has already narrowed
 
 ## [0.2.0] - 2026-09-01
 

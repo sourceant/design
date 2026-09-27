@@ -4,11 +4,6 @@ import { cn } from '../lib/utils'
 /**
  * Rows of the same shape, read down a column.
  *
- * A card says everything about one thing. A table says one thing about
- * everything, which is the question somebody asks of sixty skills or a hundred
- * files: which of these is set to never, which of them nobody has read yet. In
- * cards that answer is scattered down the page; in a column it is one glance.
- *
  * Cells are slots named after their column, so what a value looks like stays
  * with the application that knows what it means.
  */
