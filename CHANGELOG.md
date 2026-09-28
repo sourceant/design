@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-27
+
+Everything from 0.2.0 keeps working unchanged.
+
+### Added
+
+- `Table`, with cells as slots named after their column
+- `GlobalSearch`, a search field opened with Ctrl or Cmd K, handed groups of
+  results the application has already narrowed
+
 ## [0.2.0] - 2026-09-01
 
 The components the dashboard kept for itself, so both surfaces can share one
