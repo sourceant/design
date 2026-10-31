@@ -8,6 +8,9 @@
 export { default as Avatar } from './components/Avatar.vue'
 export { default as Badge } from './components/Badge.vue'
 export { default as Button } from './components/Button.vue'
+export { default as Canvas } from './components/Canvas.vue'
+export { default as CanvasCard } from './components/CanvasCard.vue'
+export { default as CanvasControls } from './components/CanvasControls.vue'
 export { default as Card } from './components/Card.vue'
 export { default as CodeGraph } from './components/CodeGraph.vue'
 export { default as GlobalSearch } from './components/GlobalSearch.vue'
@@ -42,10 +45,18 @@ export { default as ThemeToggle } from './components/ThemeToggle.vue'
 export { default as Origin } from './components/Origin.vue'
 export { default as Section } from './components/Section.vue'
 
-export { useContextKinds } from './composables/useContextKinds'
+export { useContextKinds, useMemoryTypes } from './composables/useMemoryTypes'
 export { useTheme } from './composables/useTheme'
 export { controlVariants, roomyVariants } from './lib/control'
 export { cn } from './lib/utils'
+export {
+  LANE_SIZE,
+  forgetPositions,
+  layoutLanes,
+  readSavedPositions,
+  savePosition,
+} from './canvas/layout'
+export { createEdgeRegistry } from './canvas/edges'
 export {
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,

@@ -10,7 +10,7 @@ notices the two products no longer look like one.
 ## What is in it, and what is not
 
 Tokens, and the pieces a screen is assembled from: `Avatar`, `Badge`, `Button`,
-`Card`, `Field`, `Input`, `ItemCard`, `Logo`, `Modal`,
+`Canvas`, `CanvasCard`, `Card`, `Field`, `Input`, `ItemCard`, `Logo`, `Modal`,
 `GlobalSearch`, `PageHead`, `Select`, `Table`, `Tabs`, `Textarea`, and `CodeGraph`. `src/index.js` is the list that is actually true.
 
 Nothing that knows what a workspace, a review or a proposal is. Those belong to

@@ -1,5 +1,5 @@
 /**
- * What each kind of knowledge looks like, in one place.
+ * What each type of memory looks like, in one place.
  *
  * Six screens carried their own copy of this map, identical to the character,
  * so a colour could only be changed by finding all six. Lookups are
@@ -64,7 +64,7 @@ const OPTIONS = [
   'Pattern', 'Discussion', 'Review', 'Plan',
 ] as const
 
-/** What each kind is for, in the words a person picking one needs. */
+/** What each type is for, in the words a person picking one needs. */
 const DESCRIBED: Record<string, string> = {
   Intent: 'What this exists to do, who for, and what it deliberately is not',
   Decision: 'A deliberate choice made about architecture, tooling, or approach',
@@ -77,26 +77,40 @@ const DESCRIBED: Record<string, string> = {
   Plan: 'A future intention or roadmap item',
 }
 
-export function useContextKinds() {
+export function useMemoryTypes() {
   const NEUTRAL = 'bg-muted text-muted-foreground border-border'
 
-  function tone(kind?: string | null) {
-    return TONE[(kind ?? '').toLowerCase()] ?? NEUTRAL
+  function tone(type?: string | null) {
+    return TONE[(type ?? '').toLowerCase()] ?? NEUTRAL
   }
 
-  function fill(kind?: string | null) {
-    return FILL[(kind ?? '').toLowerCase()] ?? 'bg-muted-foreground'
+  function fill(type?: string | null) {
+    return FILL[(type ?? '').toLowerCase()] ?? 'bg-muted-foreground'
   }
 
-  function ink(kind?: string | null) {
-    return INK[(kind ?? '').toLowerCase()] ?? '#a1a1aa'
+  function ink(type?: string | null) {
+    return INK[(type ?? '').toLowerCase()] ?? '#a1a1aa'
   }
 
-  const legend = Object.keys(INK).map(kind => ({
-    kind,
-    label: kind.charAt(0).toUpperCase() + kind.slice(1),
-    color: INK[kind]!,
+  const legend = Object.keys(INK).map(type => ({
+    type,
+    label: type.charAt(0).toUpperCase() + type.slice(1),
+    color: INK[type]!,
   }))
 
-  return { tone, fill, ink, legend, kinds: Object.keys(TONE), kindOptions: OPTIONS, kindDescriptions: DESCRIBED }
+  return { tone, fill, ink, legend, types: Object.keys(TONE), typeOptions: OPTIONS, typeDescriptions: DESCRIBED }
+}
+
+/** @deprecated Use `useMemoryTypes`. Kept, under its old field names, for one release. */
+export function useContextKinds() {
+  const { tone, fill, ink, legend, types, typeOptions, typeDescriptions } = useMemoryTypes()
+  return {
+    tone,
+    fill,
+    ink,
+    legend: legend.map(({ type, ...rest }) => ({ kind: type, ...rest })),
+    kinds: types,
+    kindOptions: typeOptions,
+    kindDescriptions: typeDescriptions,
+  }
 }

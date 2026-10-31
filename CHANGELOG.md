@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Everything from 0.3.0 keeps working unchanged.
+
+### Added
+
+- `Canvas`, cards in named columns with lines between the ones that relate.
+  The same data draws the same picture on every visit, and a card the reader
+  drags stays where it was left. Needs `@vue-flow/core` as a peer
+- `CanvasCard` and `CanvasControls`, the card and the zoom buttons it uses
+- `layoutLanes`, the saved-position helpers and `createEdgeRegistry`, for an
+  application that builds its own canvas
+- `useMemoryTypes`, the colours and descriptions of each memory type
+- `--canvas-bg` and `--canvas-dot` tokens, in both themes
+
+### Deprecated
+
+- `useContextKinds`, in favour of `useMemoryTypes`, which names its fields
+  `type` rather than `kind`
+
 ## [0.3.0] - 2026-09-27
 
 Everything from 0.2.0 keeps working unchanged.
