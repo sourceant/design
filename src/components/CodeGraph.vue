@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 import type { GraphNode, KnowledgeGraphData } from '../types'
-import { useContextKinds } from '../composables/useContextKinds'
+import { useMemoryTypes } from '../composables/useMemoryTypes'
 
 interface Props {
   height?: string
@@ -55,7 +55,7 @@ let ro: ResizeObserver | null = null
 // Where every node was last time, so a refetch settles rather than restarting.
 const seats = new Map<string, { x: number, y: number, z: number }>()
 
-const { ink } = useContextKinds()
+const { ink } = useMemoryTypes()
 
 /**
  * Ten colours for the parts of a code graph, and no more: past this the palette
