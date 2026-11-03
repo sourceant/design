@@ -24,9 +24,9 @@ interface Note {
   /** What it replaces. Without it a suggestion is an addition out of nowhere,
    * and the reader has to find what is going away themselves. */
   replacing?: string
-  /** Who said it: a skill's name, or what kind of suggestion it is. */
+  /** Who said it: a skill's name, or what type of suggestion it is. */
   from?: string
-  /** What kind of thing it is, in colour. */
+  /** What type of thing it is, in colour. */
   tone?: Tone
 }
 
@@ -68,7 +68,7 @@ function label(note: Note): string {
 const HUNK = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/
 
 interface Row {
-  kind: 'hunk' | 'added' | 'removed' | 'kept' | 'meta'
+  type: 'hunk' | 'added' | 'removed' | 'kept' | 'meta'
   text: string
   before: number | null
   after: number | null
@@ -86,7 +86,7 @@ const rows = computed<Row[]>(() => {
       before = Number(hunk[1])
       after = Number(hunk[2])
       started = true
-      out.push({ kind: 'hunk', text: line, before: null, after: null })
+      out.push({ type: 'hunk', text: line, before: null, after: null })
       continue
     }
     // Everything before the first hunk is git telling you which file this is,
@@ -94,13 +94,13 @@ const rows = computed<Row[]>(() => {
     if (!started) continue
 
     if (line.startsWith('+')) {
-      out.push({ kind: 'added', text: line.slice(1), before: null, after: after++ })
+      out.push({ type: 'added', text: line.slice(1), before: null, after: after++ })
     } else if (line.startsWith('-')) {
-      out.push({ kind: 'removed', text: line.slice(1), before: before++, after: null })
+      out.push({ type: 'removed', text: line.slice(1), before: before++, after: null })
     } else if (line.startsWith('\\')) {
-      out.push({ kind: 'meta', text: line, before: null, after: null })
+      out.push({ type: 'meta', text: line, before: null, after: null })
     } else {
-      out.push({ kind: 'kept', text: line.slice(1), before: before++, after: after++ })
+      out.push({ type: 'kept', text: line.slice(1), before: before++, after: after++ })
     }
   }
   return out
@@ -168,14 +168,14 @@ const overall = computed(() => (props.notes ?? []).filter((note) => !note.line))
       <table class="w-full border-collapse font-mono text-xs leading-relaxed">
         <tbody>
           <template v-for="(row, index) in rows" :key="index">
-            <tr :class="TONE[row.kind]">
+            <tr :class="TONE[row.type]">
               <td class="w-12 select-none border-r px-2 text-right align-top text-muted-foreground">
                 {{ row.before ?? '' }}
               </td>
               <td class="w-12 select-none border-r px-2 text-right align-top text-muted-foreground">
                 {{ row.after ?? '' }}
               </td>
-              <td class="w-4 select-none pl-2 align-top text-muted-foreground">{{ MARK[row.kind] }}</td>
+              <td class="w-4 select-none pl-2 align-top text-muted-foreground">{{ MARK[row.type] }}</td>
               <td class="whitespace-pre-wrap break-all py-0.5 pr-3 align-top">{{ row.text }}</td>
             </tr>
 
