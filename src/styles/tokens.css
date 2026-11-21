@@ -53,6 +53,9 @@
     --figure-4: 160 94% 30%;
     --figure-5: 262 83% 58%;
     --figure-6: 192 91% 36%;
+
+    --canvas-bg: 240 10% 5%;
+    --canvas-dot: 240 5% 20%;
   }
 
   .light {
@@ -85,6 +88,8 @@
     --pillar-graph: 262 83% 58%;
     --pillar-review: 142 71% 40%;
     --pillar-tokens: 38 92% 45%;
+    --canvas-bg: 240 20% 97%;
+    --canvas-dot: 240 6% 82%;
   }
 }
 
